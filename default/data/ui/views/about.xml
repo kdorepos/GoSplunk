@@ -1,0 +1,78 @@
+<dashboard>
+  <label>About</label>
+  <row>
+    <panel>
+      <html>
+        <center>
+          <img src="/static/app/GoSplunk/GoSplunk.png"></img>
+        </center>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+            <h1>
+                What is <a href="https://www.GoSplunk.com/">GoSplunk</a>?
+            </h1>
+            <p>Why re-invent the wheel? Unless you are opposed to wasting man-hours, use a Splunk search or query that is either exactly what you want or close enough you can modify to do just what you need.</p>
+            <h1>
+              Why use the app if the website exists?
+            </h1>
+            <li>Not everyone has the ability to operate on a network with constant web access. Copying SPL by hand can be a pain. This app hopes to lessen the burden of manually copying queries in from our website, and having it at your fingertips to use within your environment.</li>
+            <h1>
+              Disclaimer
+            </h1>
+            <li>You will find most of these queries are not just plug-and-play. Queries are categorized in GoSplunk by sourcetype, but be sure to review the query for any fields that may break a search in your environment.</li>
+        </html>
+    </panel>
+    <panel>
+      <html>
+        <h1>How to use the app:</h1>
+        <li>Use the GoSplunk dashboard to search for queries in the GoSplunk database, which now sits locally on this Splunk instance.</li>
+        <li>Use the Add Your Own dashboard to ... add your own query! Please note this only adds the query to your local database, not the official GoSplunk database found on GoSplunk.com.</li>
+        <br></br>
+        <h1>Want to contribute?</h1>
+        <p>Please consider adding your known working queries to <a href="https://www.GoSplunk.com">GoSplunk.com</a>.</p>
+        <br></br>
+        <h1>Stuck?</h1>
+        <p>We can help. Please join our <a href="https://discord.gg/fFJhGPw">Discord server</a>.</p>
+      </html>
+    </panel>
+  </row> 
+  <row>
+    <panel>
+      <title>GoSplunk Database Statistics</title>
+      <single>
+        <title>Total Number of Queries</title>
+        <search>
+          <query>| inputlookup queries.csv | stats count</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+      <single>
+        <title>Unique Sourcetypes</title>
+        <search>
+          <query>| inputlookup queries.csv | stats dc(Category)</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+      <single>
+        <title>Most Popular Sourcetype</title>
+        <search>
+          <query>| inputlookup queries.csv | stats count by Category | sort - count | head 1 | fields - count</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </single>
+    </panel>
+  </row>
+</dashboard>

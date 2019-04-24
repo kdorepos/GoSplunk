@@ -1,0 +1,66 @@
+<form>
+  <label>Query Search</label>
+  <fieldset submitButton="false">
+    <input type="dropdown" token="ST" searchWhenChanged="true">
+      <label>Sourcetype Selector</label>
+      <choice value="*">All</choice>
+      <prefix>"</prefix>
+      <suffix>"</suffix>
+      <fieldForLabel>Sourcetype</fieldForLabel>
+      <fieldForValue>Sourcetype</fieldForValue>
+      <search>
+        <query>| inputlookup queries.csv | dedup Sourcetype | table Sourcetype</query>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </search>
+      <default>*</default>
+      <initialValue>*</initialValue>
+    </input>
+    <input type="text" token="wildcard">
+      <label>Query Title / Wildcard</label>
+      <default>*</default>
+      <prefix>"*</prefix>
+      <suffix>*"</suffix>
+      <initialValue>*</initialValue>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>$SPL_FTW$</title>
+      <table>
+        <title>Click the SPL below to kick-off a search</title>
+        <search>
+          <query>| inputlookup queries.csv | search Sourcetype=$ST$ title=$wildcard$</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">2</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <set token="SPL_FTW">$row.query$</set>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+  <row depends="$row.query$">
+    <panel>
+      <title>$SPL_FTW$</title>
+      <event>
+        <title>Query Choice Results</title>
+        <search>
+          <query>"$SPL_FTW$"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="list.drilldown">none</option>
+      </event>
+    </panel>
+  </row>
+</form>

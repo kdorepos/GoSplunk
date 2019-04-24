@@ -1,0 +1,12 @@
+<nav search_view="search">
+  <view name="about" default='true' />
+  <view name="query_filter" />
+  <view name="add_your_own" />
+  <collection label="Etc.">
+    <view name="search" />
+    <view name="datasets" />
+    <view name="reports" />
+    <view name="alerts" />
+    <view name="dashboards" />
+  </collection>
+</nav>

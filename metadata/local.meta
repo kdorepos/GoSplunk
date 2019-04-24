@@ -1,0 +1,56 @@
+[app/ui]
+version = 7.2.0
+modtime = 1555183765.718921000
+
+[app/launcher]
+version = 7.2.0
+modtime = 1555183765.720773000
+
+[tags/sourcetype%3Dwineventlog%253Asecurity]
+access = read : [ * ], write : [ admin ]
+export = none
+owner = admin
+version = 7.2.0
+modtime = 1555187065.759046000
+
+[views/home_screen]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = kdor
+version = 7.2.5.1
+modtime = 1555637655.734930000
+
+[nav/default]
+version = 7.2.5.1
+modtime = 1555355936.784902000
+
+[views/add_your_own]
+access = read : [ * ], write : [ admin, power ]
+export = none
+owner = kdor
+version = 7.2.5.1
+modtime = 1556035611.992390000
+
+[views/about]
+owner = joe
+version = 7.2.5.1
+modtime = 1555637703.637885000
+
+[views/query_search]
+owner = joe
+version = 7.2.5.1
+modtime = 1555386939.651600000
+
+[views/query_filter]
+owner = lyx
+version = 7.2.5.1
+modtime = 1556122467.577872000
+
+[lookups/GoSplunk.csv]
+owner = lyx
+version = 7.2.5.1
+modtime = 1555528082.326046000
+
+[lookups/queries.csv]
+version = 7.2.5.1
+modtime = 1555735162.051497000

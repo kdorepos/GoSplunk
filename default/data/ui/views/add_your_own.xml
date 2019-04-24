@@ -1,0 +1,92 @@
+<form>
+  <label>Add Your Own</label>
+  <fieldset submitButton="true">
+    <input type="dropdown" token="current.user" depends="$another.blank.token$">
+      <label>Current User</label>
+      <fieldForLabel>username</fieldForLabel>
+      <fieldForValue>username</fieldForValue>
+      <selectFirstChoice>true</selectFirstChoice>
+      <search>
+        <query>| makeresults | eval [| rest splunk_server=local /services/authentication/current-context | return username] | table username</query>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </search>
+    </input>
+    <input type="dropdown" token="current.user" depends="$another.blank.token$">
+      <label>Today's Date</label>
+      <fieldForLabel>today</fieldForLabel>
+      <fieldForValue>today</fieldForValue>
+      <selectFirstChoice>true</selectFirstChoice>
+      <search>
+        <query>| makeresults annotate=true | eval today=strftime(_time, "%Y-%m-%d") | table today</query>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </search>
+    </input>
+    <input type="text" token="title">
+      <label>Title</label>
+    </input>
+    <input type="dropdown" token="sourcetype">
+      <label>Sourcetype</label>
+      <fieldForLabel>Category</fieldForLabel>
+      <fieldForValue>Category</fieldForValue>
+      <search>
+        <query>| inputlookup queries.csv | fields Category | dedup Category | sort + Category</query>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </search>
+    </input>
+    <input type="text" token="description">
+      <label>Description</label>
+    </input>
+    <input type="text" token="query">
+      <label>Query</label>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <html>
+        <center>
+          <h1>
+            Disclaimer:
+          </h1>
+          Queries added through this dashboard will not be reflected on GoSplunk.com. This dashboard only adds queries to your local database.
+        </center>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel depends="$blank.token$">
+      <event>
+        <title>HIDDENPANEL</title>
+        <search>
+          <progress>
+            <unset token="panel.refresh"></unset>
+          </progress>
+          <done>
+            <condition match=" 'job.resultCount' != 0">
+              <set token="panel.refresh">1</set>
+            </condition>
+          </done>
+          <query>| makeresults annotate=true | eval Title="$title$" | eval Category="$sourcetype$" | eval Description="$description$" | eval Query="$query$" | eval Author="$username$" | eval Modified="$today$" | eval Published="$today$" | table Category Title Description Query Author Modified Published | outputlookup append=true queries.csv</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="list.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </event>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>| makeresults | eval Title="$title$" | eval Sourcetype="$sourcetype$" | eval Description="$description$" | eval Query="$query$" | table Title Author Modified Published Description Sourcetype Query</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+</form>

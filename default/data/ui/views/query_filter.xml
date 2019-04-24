@@ -1,0 +1,71 @@
+<form script="reset_tokens.js">
+  <label>GoSplunk</label>
+  <description>Find queries based on sourcetype.</description>
+  <fieldset autoRun="true" submitButton="false">
+    <input type="dropdown" token="category" searchWhenChanged="true">
+      <label>Search by Sourcetype</label>
+      <fieldForLabel>Category</fieldForLabel>
+      <fieldForValue>Category</fieldForValue>
+      <search>
+        <query>
+          <![CDATA[ |inputlookup queries.csv | dedup Category | sort Category | fields Category ]]>
+        </query>
+      </search>
+      <change>
+        <set token="category">$category$</set>
+      </change>
+    </input>
+    <input type="dropdown" token="title" searchWhenChanged="true">
+      <label>Filter by Title</label>
+      <fieldForLabel>Title</fieldForLabel>
+      <fieldForValue>Title</fieldForValue>
+      <search>
+        <query>
+          <![CDATA[ |inputlookup queries.csv | table Category, Title | where Category = "$category$" | fields Title | sort Title ]]>
+        </query>
+      </search>
+      <change>
+        <set token="title">$title$</set>
+      </change>
+    </input>
+    <html>
+      <div>
+          <input id="reset_button" type="button" value="Reset" style="float: left;"/>
+      </div>
+    </html>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Information for "$title$"</title>
+      <table>
+        <title>Click on the query below to kick off a search in a new panel (Doesn't work for Dashboards)</title>
+        <search>
+          <query>
+            <![CDATA[ |inputlookup queries.csv | search Title="$title$" | fields Query  ]]>
+          </query>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">row</option>
+        <option name="wrap">true</option>
+        <drilldown>
+          <set token="GoSplunk_Query">$click.value2$</set>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+  <row depends="$GoSplunk_Query$">
+    <panel>
+      <event>
+        <title>Query Selection Results</title>
+        <search>
+          <query>$GoSplunk_Query$</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="list.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </event>
+    </panel>
+  </row>
+</form>
