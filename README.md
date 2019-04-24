@@ -1,4 +1,4 @@
-![GoSplunk Logo](https://raw.githubusercontent.com/kdorepos/gosplunk/master/appserver/static/gosplunk.png)
+![GoSplunk Logo](https://raw.githubusercontent.com/kdorepos/gosplunk/master/appserver/static/GoSplunk.png)
 
 # What is [GoSplunk](https://www.gosplunk.com/)?
 
