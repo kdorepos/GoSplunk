@@ -1,28 +1,6 @@
 <form>
   <label>Add Your Own</label>
   <fieldset submitButton="true">
-    <input type="dropdown" token="current.user" depends="$another.blank.token$">
-      <label>Current User</label>
-      <fieldForLabel>username</fieldForLabel>
-      <fieldForValue>username</fieldForValue>
-      <selectFirstChoice>true</selectFirstChoice>
-      <search>
-        <query>| makeresults | eval [| rest splunk_server=local /services/authentication/current-context | return username] | table username</query>
-        <earliest>-24h@h</earliest>
-        <latest>now</latest>
-      </search>
-    </input>
-    <input type="dropdown" token="current.user" depends="$another.blank.token$">
-      <label>Today's Date</label>
-      <fieldForLabel>today</fieldForLabel>
-      <fieldForValue>today</fieldForValue>
-      <selectFirstChoice>true</selectFirstChoice>
-      <search>
-        <query>| makeresults annotate=true | eval today=strftime(_time, "%Y-%m-%d") | table today</query>
-        <earliest>-24h@h</earliest>
-        <latest>now</latest>
-      </search>
-    </input>
     <input type="text" token="title">
       <label>Title</label>
     </input>
@@ -68,7 +46,7 @@
               <set token="panel.refresh">1</set>
             </condition>
           </done>
-          <query>| makeresults annotate=true | eval Title="$title$" | eval Category="$sourcetype$" | eval Description="$description$" | eval Query="$query$" | eval Author="$username$" | eval Modified="$today$" | eval Published="$today$" | table Category Title Description Query Author Modified Published | outputlookup append=true queries.csv</query>
+          <query>| makeresults annotate=true | eval today=strftime(_time, "%Y-%m-%d") | eval [| rest splunk_server=local /services/authentication/current-context | return username] | eval Title="$title$" | eval Category="$sourcetype$" | eval Description="$description$" | eval Query="$query$" | eval Author='username' | eval Modified='today' | eval Published='today' | table Category Title Description Query Author Modified Published | outputlookup append=true queries.csv</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>
@@ -81,7 +59,7 @@
     <panel>
       <table>
         <search>
-          <query>| makeresults | eval Title="$title$" | eval Sourcetype="$sourcetype$" | eval Description="$description$" | eval Query="$query$" | table Title Author Modified Published Description Sourcetype Query</query>
+          <query>| makeresults | eval today=strftime(_time, "%Y-%m-%d") | eval [| rest splunk_server=local /services/authentication/current-context | return username] | eval Title="$title$" | eval Sourcetype="$sourcetype$" | eval Description="$description$" | eval Query="$query$" | eval Author='username' | eval Modified='today' | eval Published='today' | table Title Author Modified Published Description Sourcetype Query</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>

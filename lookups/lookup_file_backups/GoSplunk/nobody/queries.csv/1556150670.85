@@ -2570,3 +2570,4 @@ Find unused dashboards -,_internal,Use this search to find unused dashboards: ,"
 | sort - ""Days since last accessed"" 
 | convert ctime(Time) 
 | fields - Now",Azeemering,2019-04-16,2019-04-17
+"$title$","$sourcetype$","$description$","$query$",kdor,"2019-04-25","2019-04-25"
