@@ -9,48 +9,65 @@ modtime = 1555183765.720773000
 [tags/sourcetype%3Dwineventlog%253Asecurity]
 access = read : [ * ], write : [ admin ]
 export = none
-owner = admin
 version = 7.2.0
 modtime = 1555187065.759046000
 
 [views/home_screen]
 access = read : [ * ], write : [ admin, power ]
 export = none
-owner = kdor
 version = 7.2.5.1
 modtime = 1555637655.734930000
 
 [nav/default]
+access = read : [ * ], write : [ admin, power ]
 version = 7.2.5.1
 modtime = 1555355936.784902000
 
 [views/add_your_own]
 access = read : [ * ], write : [ admin, power ]
 export = none
-owner = kdor
-version = 7.2.5.1
-modtime = 1556035611.992390000
+version = 7.3.0
+modtime = 1566513945.380151900
 
 [views/about]
-owner = joe
+access = read : [ * ], write : [ admin, power ]
 version = 7.2.5.1
 modtime = 1555637703.637885000
 
 [views/query_search]
-owner = joe
+access = read : [ * ], write : [ admin, power ]
 version = 7.2.5.1
 modtime = 1555386939.651600000
 
 [views/query_filter]
-owner = lyx
-version = 7.2.5.1
-modtime = 1556122467.577872000
+access = read : [ * ], write : [ admin, power ]
+version = 7.3.0
+modtime = 1566515256.506506100
 
 [lookups/GoSplunk.csv]
-owner = lyx
+access = read : [ * ], write : [ admin, power ]
 version = 7.2.5.1
 modtime = 1555528082.326046000
 
 [lookups/queries.csv]
+access = read : [ * ], write : [ admin, power ]
 version = 7.2.5.1
 modtime = 1556152375.669355000
+
+[app/install/install_source_checksum]
+access = read : [ * ], write : [ admin, power ]
+version = 7.2.5.1
+modtime = 1556156137.890887500
+
+[inputs/script%3A%2F%2F%24SPLUNK_HOME%5Cetc%5Capps%5CGoSplunk%5Cbin%5Cgosplunkupdate.py]
+access = read : [ admin ], write : [ admin, power ]
+version = 7.3.0
+modtime = 1565819307.541000600
+
+[views/gosplunk_update]
+access = read : [ admin ], write : [ admin, power ]
+version = 7.3.0
+modtime = 1565839682.200082400
+
+[commands/gosplunkupdate]
+access = read : [ admin ], write : [ admin, power ]

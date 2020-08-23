@@ -2,6 +2,7 @@
   <view name="about" default='true' />
   <view name="query_filter" />
   <view name="add_your_own" />
+  <view name="gosplunk_update" />
   <collection label="Etc.">
     <view name="search" />
     <view name="datasets" />

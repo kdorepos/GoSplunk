@@ -1,0 +1,30 @@
+<form script="gosplunk_update.js" hideFilters="true">
+  <label>GoSplunk Update</label>
+  <init>
+    <set token="tokUpdate">| makeresults</set>
+  </init>
+  <fieldset submitButton="false" autoRun="false">
+    <input type="button" token="tokUpdate" searchWhenChanged="true">
+      <default>|makeresults</default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Used to update GoSplunk queries *DO NOT USE IF NOT CONNECTED TO INTERNET*</title>
+      <html>
+        <div id="gosplunkupdater">
+          <input id="update_button" type="button" value="Update GoSplunk App"/>
+        </div>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <search>
+        <query>
+          $tokUpdate$
+        </query>
+      </search>
+    </panel>
+  </row>
+</form>
